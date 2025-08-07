@@ -3,3 +3,122 @@ title: "Leslie Matrix Practice"
 format: html
 ---
 
+## Matrices
+
+```{r}
+# Make a sequence of values from 1 to 10
+my_values <- seq(from = 1, to = 10, by = 1)
+
+# Look at values (always!)
+my_values
+```
+
+```{r}
+# convert to matrix
+my_matrix <- matrix(data = my_values,
+                    nrow = 2,
+                    ncol = 5, byrow = TRUE)
+
+my_matrix
+```
+
+```{r}
+matrix(data = my_values,
+       nrow = 3,
+       ncol = 4, byrow = TRUE)
+```
+
+## Matrix math
+
+```{r}
+4 * my_matrix
+```
+
+```{r}
+my_values2 <- seq(from = 21, to = 30)
+my_matrix2 <- matrix(my_values2, nrow = 2, byrow = TRUE)
+my_matrix2
+```
+
+```{r}
+my_matrix - my_matrix2
+```
+
+### Matrix multiplication
+```{r}
+# make a couple of 2x2 matrices
+cats <- matrix(data = c(0, 4, 3, 1), nrow = 2, byrow = TRUE)
+dogs <- matrix(data = c(6, -3, 0, 2), nrow = 2, byrow = TRUE)
+
+cats
+dogs
+```
+
+```{r}
+# matrix multiplication
+cats %*% dogs
+```
+
+## Leslie matrix example
+Create a projection matrix
+```{r}
+# create matrix
+insect_leslie <- matrix(c(0,0,600,0.2,0,0,0,0.08,0),
+                        nrow = 3, ncol = 3,
+                        byrow = TRUE)
+insect_leslie
+```
+
+Specify initial conditions
+```{r}
+# insect lifestage population size (year 0)
+insect_y0 <- c(12000, 700, 500)
+```
+
+Find the population for each lifestage at year 1
+```{r}
+insect_y1 <- insect_leslie %*% insect_y0
+
+insect_y1
+```
+
+Find the population for each lifestage at year 2
+```{r}
+insect_y2 <- insect_leslie %*% insect_y1
+insect_y3 <- insect_leslie %*% insect_y2
+insect_y4 <- insect_leslie %*% insect_y3
+
+insect_y4
+```
+
+## Another Leslie matrix example
+```{r}
+# make the projection matrix
+tree_leslie <- matrix(c(0, 0, 5000, 0.1, 0, 0, 0, 0.06, 0.95),
+                      nrow = 3, ncol = 3, byrow = TRUE)
+
+tree_leslie
+```
+
+```{r}
+# create initial conditions at year 0
+tree_0 <- c(5000, 0, 0)
+
+# year 1
+tree_1 <- tree_leslie %*% tree_0
+tree_1
+
+# year 2
+tree_2 <- tree_leslie %*% tree_1
+tree_2
+
+# year 3
+tree_3 <- tree_leslie %*% tree_2
+tree_3
+
+# year 4
+tree_4 <- tree_leslie %*% tree_3
+tree_4
+```
+
+
